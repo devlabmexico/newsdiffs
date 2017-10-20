@@ -16,3 +16,16 @@ class ExcelsiorParser(BaseParser):
     				'http://www.excelsior.com.mx/expresiones',
     				'http://www.excelsior.com.mx/opinion',
     				'http://www.excelsior.com.mx/videos']
+
+    def _parse(self, html):
+    	soup = bs4.BeautifulSoup(html)
+
+    	self.title = soup.find('h1', class_='node-title').getText()
+
+    	summary = soup.find('h2', class_='node-summary').getText()
+    	article = soup.find('div', {'id' : 'node-article-body'}).getText()
+    	self.body = summary + "\n" + article
+
+    	self.byline = ''
+
+    	self.date = soup.find('span', class_='imx-data-created').getText()
