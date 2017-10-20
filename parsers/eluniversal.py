@@ -28,3 +28,19 @@ class ElUniversalParser(BaseParser):
                     'http://www.eluniversal.com.mx/english',
                     'http://www.eluniversal.com.mx/minuto-x-minuto'
                     ]
+
+    def _parse(self, html):
+        soup = bs4.BeautifulSoup(html)
+
+        self.title = soup.find('h1').getText()
+
+        summary = soup.find('div', class_='field-name-field-resumen').getText()
+        article = soup.find('div', class_='field-name-body').getText()
+        self.body = summary + "\n" + article
+        
+        self.byline = soup.find('div', class_='field-item').getText()
+
+        self.date = soup.find('div', class_='fechap').getText()
+
+
+
