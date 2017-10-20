@@ -32,15 +32,36 @@ class ElUniversalParser(BaseParser):
     def _parse(self, html):
         soup = bs4.BeautifulSoup(html)
 
-        self.title = soup.find('h1').getText()
+        elt_title = soup.find('h1')
+        if elt_title is None:
+            self.real_article = False
+            return
+        else:
+            self.title = elt_title.getText()
 
-        summary = soup.find('div', class_='field-name-field-resumen').getText()
-        article = soup.find('div', class_='field-name-body').getText()
-        self.body = summary + "\n" + article
+        elt_body = soup.find('div', class_='field-name-body')
+        if elt_body is None:
+            self.real_article = False
+            return
+        else: 
+            elt_summary = soup.find('div', class_='field-name-field-resumen')
+            if elt_summary is None:
+                self.body = elt_body.getText()
+            else:
+                self.body = elt_summary.getText() + "\n" + elt_body.getText()
+
         
-        self.byline = soup.find('div', class_='field-item').getText()
+        elt_byline = soup.find('div', class_='field-item')
+        if elt_byline is None:
+            self.byline = ''
+        else:
+            self.byline = elt_byline.getText()
 
-        self.date = soup.find('div', class_='fechap').getText()
+        elt_date = soup.find('div', class_='fechap')
+        if elt_date is None:
+            self.date = ''
+        else:
+            self.date = elt_date.getText()
 
 
 
