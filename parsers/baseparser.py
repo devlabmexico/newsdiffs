@@ -31,6 +31,8 @@ def grab_url(url, max_depth=5, opener=None):
     if opener is None:
         cj = cookielib.CookieJar()
         opener = urllib2.build_opener(urllib2.HTTPCookieProcessor(cj))
+        opener.addheaders=[('User-Agent','Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/36.0.1941.0 Safari/537.36')]
+
     retry = False
     try:
         text = opener.open(url, timeout=5).read()
