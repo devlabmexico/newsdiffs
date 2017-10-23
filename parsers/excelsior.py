@@ -6,26 +6,46 @@ class ExcelsiorParser(BaseParser):
     domains = ['www.excelsior.com.mx']
     feeder_pat   = '^http://www.excelsior.com.mx/[a-z]+/20[0-9]{2}/[0-9]{2}/[0-9]{2}/[0-9]+'
     feeder_pages = ['http://www.excelsior.com.mx',
-    				'http://www.excelsior.com.mx/nacional',
-    				'http://www.excelsior.com.mx/global',
-    				'http://www.excelsior.com.mx/dinero',
-    				'http://www.excelsior.com.mx/comunidad',
-    				'http://www.excelsior.com.mx/adrenalina',
-    				'http://www.excelsior.com.mx/funcion',
-    				'http://www.excelsior.com.mx/hacker',
-    				'http://www.excelsior.com.mx/expresiones',
-    				'http://www.excelsior.com.mx/opinion',
-    				'http://www.excelsior.com.mx/videos']
+                    'http://www.excelsior.com.mx/nacional',
+                    'http://www.excelsior.com.mx/global',
+                    'http://www.excelsior.com.mx/dinero',
+                    'http://www.excelsior.com.mx/comunidad',
+                    'http://www.excelsior.com.mx/adrenalina',
+                    'http://www.excelsior.com.mx/funcion',
+                    'http://www.excelsior.com.mx/hacker',
+                    'http://www.excelsior.com.mx/expresiones',
+                    'http://www.excelsior.com.mx/opinion',
+                    'http://www.excelsior.com.mx/videos']
 
     def _parse(self, html):
-    	soup = bs4.BeautifulSoup(html)
+        soup = bs4.BeautifulSoup(html)
 
-    	self.title = soup.find('h1', class_='node-title').getText()
+        elt_title = soup.find('h1', class_="node-title")
+        if elt_title is None:
+            self.real_article = False
+            return
+        else:
+            self.title = elt_title.getText()
 
-    	summary = soup.find('h2', class_='node-summary').getText()
-    	article = soup.find('div', {'id' : 'node-article-body'}).getText()
-    	self.body = summary + "\n" + article
+        elt_body = soup.find('div', id='node-article-body')
+        if elt_body is None:
+            self.real_article = False
+            return
+        else: 
+            elt_summary = soup.find('h2', class_='node-summary')
+            if elt_summary is None:
+                elt_summary = soup.find('h4', class_='node-summary')
+                if elt_summary is None:
+                    self.body = elt_body.getText()
+                else:
+                    self.body = elt_summary.getText() + "\n" + elt_body.getText()
+            else:
+                self.body = elt_summary.getText() + "\n" + elt_body.getText()
 
-    	self.byline = ''
+        self.byline = ''
 
-    	self.date = soup.find('span', class_='imx-data-created').getText()
+        elt_date = soup.find('span', class_='imx-data-created')
+        if elt_date is None:
+            self.date = ''
+        else:
+            self.date = elt_date.getText()
