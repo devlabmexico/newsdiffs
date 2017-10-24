@@ -19,6 +19,7 @@ def strip_prefix(string, prefix):
 
 PublicationDict = {
                    'www.excelsior.com.mx': 'Excelsior',
+                   'www.jornada.unam.mx': 'La Jornada en Línea'
                    }
 
 ancient = datetime(1901, 1, 1)
