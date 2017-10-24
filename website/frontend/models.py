@@ -17,7 +17,11 @@ def strip_prefix(string, prefix):
         string = string[len(prefix):]
     return string
 
-PublicationDict = {'hugo.mecabotware.com': 'TEST'}
+PublicationDict = {}
+PublicationDict = {'www.excelsior.com.mx': 'Excelsior',
+                   'hugo.mecabotware.com': 'TEST',
+                   'www.jornada.unam.mx': 'La Jornada en Línea'
+                   }
 
 ancient = datetime(1901, 1, 1)
 

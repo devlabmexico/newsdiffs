@@ -9,6 +9,8 @@
 
 parsers = """
 test.TestParser
+jornada.JornadaParser
+excelsior.ExcelsiorParser
 """.split()
 
 parser_dict = {}
