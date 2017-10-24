@@ -17,8 +17,9 @@ def strip_prefix(string, prefix):
         string = string[len(prefix):]
     return string
 
-PublicationDict = {
-                   'www.excelsior.com.mx': 'Excelsior',
+PublicationDict = {}
+PublicationDict = {'www.excelsior.com.mx': 'Excelsior',
+                   'hugo.mecabotware.com': 'TEST',
                    'www.jornada.unam.mx': 'La Jornada en Línea'
                    }
 

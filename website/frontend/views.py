@@ -104,7 +104,8 @@ def get_articles(source=None, distance=0):
     return articles
 
 
-SOURCES = '''excelsior.com.mx jornada.unam.mx'''.split()
+
+SOURCES = '''hugo.mecabotware.com excelsior.com.mx jornada.unam.mx'''.split()
 
 def is_valid_domain(domain):
     """Cheap method to tell whether a domain is being tracked."""
