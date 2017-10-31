@@ -20,10 +20,29 @@ class JornadaParser(BaseParser):
     def _parse(self, html):
         soup = bs4.BeautifulSoup(html)
 
-        self.title = soup.find('h1').getText()
+        elt_title = soup.find('h1')
+        if elt_title is None:
+            self.real_article = False
+            return
+        else:
+            self.title = elt_title.getText()
 
-        self.body = soup.find('div', {'id' : 'content_nitf'}).getText()
+        elt_body = soup.find('div', id='content_nitf')
+        if elt_body is None:
+            self.real_article = False
+            return
+        else: 
+            self.body = elt_body.getText()
 
-        self.byline = soup.find('span', class_='nitf_author').getText()
+        
+        elt_byline = soup.find('span', class_='nitf_author')
+        if elt_byline is None:
+            self.byline = ''
+        else:
+            self.byline = elt_byline.getText()
 
-        self.date = soup.find('span', class_='nitf_date').getText()
+        elt_date = soup.find('span', class_='nitf_date')
+        if elt_date is None:
+            self.date = ''
+        else:
+            self.date = elt_date.getText()
