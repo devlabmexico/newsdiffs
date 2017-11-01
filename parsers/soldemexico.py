@@ -47,7 +47,6 @@ class ElSolDeMexicoParser(BaseParser):
                     'https://www.elsoldemexico.com.mx/doble-via/virales',
                     'https://www.elsoldemexico.com.mx/deportes',
                     'https://www.elsoldemexico.com.mx/deportes/americano',
-                    'https://www.elsoldemexico.com.mx/deportes/automotriz',
                     'https://www.elsoldemexico.com.mx/deportes/automovilismo',
                     'https://www.elsoldemexico.com.mx/deportes/en-el-ring',
                     'https://www.elsoldemexico.com.mx/deportes/futbol',
