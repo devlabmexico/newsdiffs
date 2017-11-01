@@ -12,6 +12,7 @@ test.TestParser
 jornada.JornadaParser
 excelsior.ExcelsiorParser
 eluniversal.ElUniversalParser
+milenio.MilenioParser
 """.split()
 
 parser_dict = {}
