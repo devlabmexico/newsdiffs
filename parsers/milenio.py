@@ -3,7 +3,7 @@ import bs4
 
 class MilenioParser(BaseParser):
     SUFFIX = ''
-    domains = ['www.milenio.com/']
+    domains = ['www.milenio.com']
     feeder_pat   = '^http://www.milenio.com/[a-zA-Z0-9_\-]+(/[a-zA-Z0-9_\-]+)+\.(html)$'
     feeder_pages = [
                     'http://www.milenio.com',
