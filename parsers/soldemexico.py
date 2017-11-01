@@ -68,7 +68,6 @@ class ElSolDeMexicoParser(BaseParser):
             self.real_article = False
             return
         else: 
-            print elt_body.getText()
             elt_body_content = ''
             elt_body_ps = elt_body.findAll('p', class_=None)
             for p in elt_body_ps:
