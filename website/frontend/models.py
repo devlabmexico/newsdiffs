@@ -18,6 +18,7 @@ def strip_prefix(string, prefix):
     return string
 
 PublicationDict = {
+                   'www.elsoldemexico.com.mx': 'El Sol de Mexico',
                    'www.milenio.com': 'Milenio',
                    'www.eluniversal.com.mx': 'El Universal',
                    'www.excelsior.com.mx': 'Excelsior',

@@ -13,6 +13,7 @@ jornada.JornadaParser
 excelsior.ExcelsiorParser
 eluniversal.ElUniversalParser
 milenio.MilenioParser
+soldemexico.ElSolDeMexicoParser
 """.split()
 
 parser_dict = {}
