@@ -63,15 +63,20 @@ class ElSolDeMexicoParser(BaseParser):
         else:
             self.title = elt_title.getText()
 
-        elt_body = soup.find('section', class_='col-sm-8')
-        if elt_body is None:
+        elt_body = soup.find('div', class_='content-body')
+        elt_body_continue = soup.find('section', class_='content-continued-body')
+        if (elt_body is None) or (elt_body_continue is None):
             self.real_article = False
             return
         else: 
             elt_body_content = ''
             elt_body_ps = elt_body.findAll('p', class_=None)
+            elt_body_continue_ps = elt_body_continue.findAll('p', class_=None)
+
             for p in elt_body_ps:
                 elt_body_content = elt_body_content + "\n" + p.getText()
+            for op in elt_body_continue_ps:
+                elt_body_content = elt_body_content + "\n" + op.getText()
 
             elt_summary = soup.find('h3', class_='subtitle')
             if elt_summary is None:
