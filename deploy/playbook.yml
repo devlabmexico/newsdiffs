@@ -1,0 +1,64 @@
+---
+- hosts: production
+  become: true
+  vars_files:
+    - vars/deploy_app.yml
+  tasks:
+    - include_role:
+        name: nginxinc.nginx  
+    - file:
+        path: /etc/nginx/sites-enabled
+        state: directory
+        mode: 0755
+    - file:
+        path: /var/run/uwsgi
+        owner: www-data
+        group: www-data
+        state: directory
+        mode: u=rwx,g=rx,o=rx
+    - include_role:
+        name: ansible-uwsgi-nginx
+      vars:
+        app_name: '{{ domain }}'
+        app_uwsgi_chdir: '{{ project_dir }}'
+        app_nginx_ssl_only: true
+        app_nginx_ssl_spdy_enabled: true
+        app_nginx_limitreq_enabled: true  
+        app_uwsgi_exec_user: '{{ app_user }}'
+        app_uwsgi_exec_group: '{{ app_group }}'
+        app_nginx_limitreq_per_second: 10
+        app_nginx_static_cache_assets_enabled: true
+        app_nginx_static_cache_assets_expire_hours: 48
+        app_nginx_static_root: '{{ static_dir }}'
+        app_nginx_static_paths:
+          - /favicon.ico
+          - /stylesheets/
+          - /javascripts/
+          - /images/
+          - /plugin_assets/
+          - /help/
+          - /themes/
+        app_uwsgi_plugin: python
+        app_uwsgi_plugin_python_venv_path: '{{ venv_dir }}'
+    - user:
+        name: 'nginx'
+        groups: www-data
+        append: yes
+    
+    - replace:
+        path: "/etc/uwsgi/apps-enabled/{{ domain }}.ini"
+        regexp: '(\s+)wsgi:application(\s+.*)?$'
+        replace: '\1{{ django_app }}.wsgi:application\2'
+    - replace:
+        path: "/etc/uwsgi/apps-enabled/{{ domain }}.ini"
+        regexp: '(\s+)wsgi.py(\s+.*)?$'
+        replace: '\1{{ django_app }}/wsgi.py\2'
+
+    - replace:
+        path: '/etc/nginx/nginx.conf'
+        regexp: '(.*\s*)conf\.d(.*)$'
+        replace: '\1sites-enabled\2'
+
+    - service:
+        name:  nginx
+        state: restarted

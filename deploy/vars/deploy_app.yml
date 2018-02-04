@@ -1,0 +1,7 @@
+domain: example.org
+project_dir: /home/ubuntu/newsdiffs
+app_user: ubuntu
+app_group: ubuntu
+static_dir: /home/ubuntu/newsdiffs/public
+venv_dir: /home/ubuntu/env
+django_app: website

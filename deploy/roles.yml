@@ -1,0 +1,2 @@
+- nginxinc.nginx
+- src: https://github.com/savoirfairelinux/ansible-uwsgi-nginx.git
