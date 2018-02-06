@@ -4,3 +4,4 @@ beautifulsoup4
 beautifulsoup
 South
 html5lib
+MySQL-python==1.2.5
