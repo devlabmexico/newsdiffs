@@ -8,7 +8,6 @@
 # List of parsers to import and use based on parser.domains
 
 parsers = """
-test.TestParser
 jornada.JornadaParser
 excelsior.ExcelsiorParser
 eluniversal.ElUniversalParser
