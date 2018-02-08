@@ -1,3 +1,6 @@
+import newrelic.agent
+newrelic.agent.initialize()
+
 import os, sys
 
 # Use dev settings if not otherwise configured.
@@ -15,3 +18,5 @@ sys.path.append(THIS_DIR)
 # as well as any WSGI server configured to use this file.
 from django.core.wsgi import get_wsgi_application
 application = get_wsgi_application()
+application = newrelic.agent.WSGIApplicationWrapper(application)
+
