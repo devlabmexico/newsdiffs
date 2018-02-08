@@ -37,7 +37,8 @@
           - /images/
           - /plugin_assets/
           - /help/
-          - /themes/
+          - /themes/sys.path.append(os.getcwd())
+
         app_uwsgi_plugin: python
         app_uwsgi_plugin_python_venv_path: '{{ venv_dir }}'
     - user:
@@ -58,6 +59,30 @@
         path: '/etc/nginx/nginx.conf'
         regexp: '(.*\s*)conf\.d(.*)$'
         replace: '\1sites-enabled\2'
+
+    - command: test -L "/etc/uwsgi/sites"
+      register: is_link
+      ignore_errors: True
+
+    - file:
+        path: '/etc/uwsgi/sites'
+        state: absent
+      when: is_link|failed
+
+    - file:
+        dest: '/etc/uwsgi/sites'
+        src: '/etc/uwsgi/apps-enabled'
+        state: link
+
+    - ini_file:
+        path: '/etc/uwsgi/sites/{{domain}}.ini'
+        section: uwsgi
+        option: "{{ item.key }}"
+        value: "{{ item.value }}"
+      with_items:
+        - { key: 'enable-threads', value: 'true' }
+        - { key: 'single-interpreter', value: 'true' }
+        
 
     - service:
         name:  nginx
