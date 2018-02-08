@@ -82,8 +82,28 @@
       with_items:
         - { key: 'enable-threads', value: 'true' }
         - { key: 'single-interpreter', value: 'true' }
-        
 
-    - service:
-        name:  nginx
-        state: restarted
+    - ini_file:
+        path: '/etc/mysql/my.cnf'
+        section: client
+        option: default-character-set
+        value: utf8mb4
+
+    - ini_file:
+        path: '/etc/mysql/my.cnf'
+        section: mysql 
+        option: default-character-set
+        value: utf8mb4
+
+    - ini_file:
+        path: '/etc/mysql/my.cnf'
+        section: mysqld
+        option: '{{ item.key }}'
+        value: '{{ item.value }}'
+      with_items:
+        - { key: character-set-client-handshake, value: 'FALSE' }
+        - { key: character-set-server, value: 'utf8mb4' }
+        - { key: collation-server, value: 'utf8mb4_unicode_ci' }
+        - { key: init-connect, value: "'SET NAMES utf8'"}
+        - { key: range_optimizer_max_mem_size, value: 0 }
+
