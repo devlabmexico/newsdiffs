@@ -37,7 +37,8 @@
           - /images/
           - /plugin_assets/
           - /help/
-          - /themes/
+          - /themes/sys.path.append(os.getcwd())
+
         app_uwsgi_plugin: python
         app_uwsgi_plugin_python_venv_path: '{{ venv_dir }}'
     - user:
@@ -59,6 +60,50 @@
         regexp: '(.*\s*)conf\.d(.*)$'
         replace: '\1sites-enabled\2'
 
-    - service:
-        name:  nginx
-        state: restarted
+    - command: test -L "/etc/uwsgi/sites"
+      register: is_link
+      ignore_errors: True
+
+    - file:
+        path: '/etc/uwsgi/sites'
+        state: absent
+      when: is_link|failed
+
+    - file:
+        dest: '/etc/uwsgi/sites'
+        src: '/etc/uwsgi/apps-enabled'
+        state: link
+
+    - ini_file:
+        path: '/etc/uwsgi/sites/{{domain}}.ini'
+        section: uwsgi
+        option: "{{ item.key }}"
+        value: "{{ item.value }}"
+      with_items:
+        - { key: 'enable-threads', value: 'true' }
+        - { key: 'single-interpreter', value: 'true' }
+
+    - ini_file:
+        path: '/etc/mysql/my.cnf'
+        section: client
+        option: default-character-set
+        value: utf8mb4
+
+    - ini_file:
+        path: '/etc/mysql/my.cnf'
+        section: mysql 
+        option: default-character-set
+        value: utf8mb4
+
+    - ini_file:
+        path: '/etc/mysql/my.cnf'
+        section: mysqld
+        option: '{{ item.key }}'
+        value: '{{ item.value }}'
+      with_items:
+        - { key: character-set-client-handshake, value: 'FALSE' }
+        - { key: character-set-server, value: 'utf8mb4' }
+        - { key: collation-server, value: 'utf8mb4_unicode_ci' }
+        - { key: init-connect, value: "'SET NAMES utf8'"}
+        - { key: range_optimizer_max_mem_size, value: 0 }
+
