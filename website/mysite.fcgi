@@ -9,7 +9,7 @@ sys.path.insert(0, os.path.dirname(ROOT_DIR))
 sys.path.insert(0, ROOT_DIR)
 
 # Switch to the directory of your project. (Optional.)
-# os.chdir("/home/user/myproject")
+os.chdir("/home/ubuntu/newsdiff/website")
 
 # Set the DJANGO_SETTINGS_MODULE environment variable.
 os.environ['DJANGO_SETTINGS_MODULE'] = "website.settings"

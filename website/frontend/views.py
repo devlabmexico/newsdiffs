@@ -105,11 +105,11 @@ def get_articles(source=None, distance=0):
 
 
 SOURCES = '''
+elsoldemexico.com.mx
 excelsior.com.mx
 jornada.unam.mx
 eluniversal.com.mx
 milenio.com
-elsoldemexico.com.mx
 '''.split()
 
 def is_valid_domain(domain):

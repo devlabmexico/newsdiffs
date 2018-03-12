@@ -96,10 +96,10 @@ class Command(BaseCommand):
                 print("{} elementos fueron eliminados en la db destino {}".format(
                     c, destiny
                 ))
-            with transaction.commit_on_success():
-                for article in articles_source.all():
-                    print("Copiyng article {}/{}\r".format(article.pk, total), end='')
-                    article.save(using=destiny, force_insert=True)
+#            with transaction.commit_on_success():
+            for article in articles_source.all():
+                print("Copiyng article {}/{}\r".format(article.pk, total), end='')
+                article.save(using=destiny, force_insert=True)
 
         if not options['noupvote']:
             upvote_source = Upvote.objects.using(source)
@@ -110,10 +110,10 @@ class Command(BaseCommand):
                     c, destiny
                 ))
 
-            with transaction.commit_on_success():
-                for upvote in upvote_source.all():
-                    print("Copiyng upvote id {}/{}\r".format(upvote.pk, total), end='')
-                    upvote.save(using=destiny, force_insert=True)
+#           with transaction.commit_on_success():
+            for upvote in upvote_source.all():
+                print("Copiyng upvote id {}/{}\r".format(upvote.pk, total), end='')
+                upvote.save(using=destiny, force_insert=True)
 
         if not options['noversion']:
             version_source = Version.objects.using(source)

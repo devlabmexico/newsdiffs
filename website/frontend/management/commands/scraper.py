@@ -54,6 +54,11 @@ scanned them recently, unless --all is passed.
         ch.setFormatter(formatter)
         logger.addHandler(ch)
 
+        fh = logging.StreamHandler(sys.stdout)
+        fh.setLevel(logging.DEBUG)
+        fh.setFormatter(formatter)
+        logger.addHandler(fh)
+
         for repo in all_git_repos():
             cleanup_git_repo(repo)
 
@@ -373,7 +378,7 @@ def get_update_delay(minutes_since_update):
 def update_versions(todays_repo, do_all=False):
     logger.info('Looking for articles to check')
     # For memory issues, restrict to the last year of articles
-    threshold = datetime.now() - timedelta(days=366)
+    threshold = datetime.now() - timedelta(days=100)
     article_query = models.Article.objects.exclude(git_dir='old').filter(Q(last_update__gt=threshold) | 
                                                                          Q(initial_date__gt=threshold))
     articles = list(article_query)
