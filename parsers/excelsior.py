@@ -4,7 +4,7 @@ import bs4
 class ExcelsiorParser(BaseParser):
     SUFFIX = ''
     domains = ['www.excelsior.com.mx']
-    feeder_pat   = '^http:\/\/www.excelsior.com.mx\/[a-z]+\/[a-zA-Z0-9_\-\/]+\/[0-9]+'
+    feeder_pat   = '^http://www.excelsior.com.mx/[a-z]+/[a-zA-Z0-9_\-\/]+/[0-9]+'
     feeder_pages = ['http://www.excelsior.com.mx',
                     'http://www.excelsior.com.mx/nacional',
                     'http://www.excelsior.com.mx/global',
@@ -17,7 +17,6 @@ class ExcelsiorParser(BaseParser):
                     'http://www.excelsior.com.mx/opinion',
                     'http://www.excelsior.com.mx/trending',
                     'http://www.excelsior.com.mx/nacional/elecciones-2018',
-                    'http://www.excelsior.com.mx/trump/una-nueva-era',
                     'http://www.excelsior.com.mx/medio-ambiente',
                     'http://www.excelsior.com.mx/viral',
                     'http://www.excelsior.com.mx/videos']
