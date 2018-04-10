@@ -22,7 +22,7 @@ ch = logging.StreamHandler()
 ch.setLevel(logging.WARNING)
 ch.setFormatter(formatter)
 logger.addHandler(ch)
-
+SOCKET_TIMEOUT=60.0 #seconds
 
 
 # Utility functions
@@ -34,8 +34,9 @@ def grab_url(url, max_depth=3, opener=None):
         opener.addheaders=[('User-Agent','Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/36.0.1941.0 Safari/537.36')]
 
     retry = False
+    socket.setdefaulttimeout(SOCKET_TIMEOUT)
     try:
-        text = opener.open(url, timeout=30).read()
+        text = opener.open(url, timeout=60).read()
         if '<title>NY Times Advertisement</title>' in text:
             retry = True
     except socket.timeout:
