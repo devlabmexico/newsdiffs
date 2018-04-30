@@ -4,7 +4,7 @@ import bs4
 class ExcelsiorParser(BaseParser):
     SUFFIX = ''
     domains = ['www.excelsior.com.mx']
-    feeder_pat   = '^http://www.excelsior.com.mx/[a-z]+/[a-zA-Z0-9_\-\/]+/[0-9]+'
+    feeder_pat   = 'http:\/\/www.excelsior.com.mx\/[a-z]+\/[a-zA-Z0-9_\-\/]+\/[0-9_\-\/]+\/(.(?!.*\.pdf))*$'
     feeder_pages = ['http://www.excelsior.com.mx',
                     'http://www.excelsior.com.mx/nacional',
                     'http://www.excelsior.com.mx/global',
