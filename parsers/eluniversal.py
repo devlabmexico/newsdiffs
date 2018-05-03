@@ -4,7 +4,7 @@ import bs4
 class ElUniversalParser(BaseParser):
     SUFFIX = ''
     domains = ['www.eluniversal.com.mx']
-    feeder_pat   = '^http://www.eluniversal.com.mx/[a-zA-Z0-9_\-]+/[a-zA-Z0-9_\-]+'
+    feeder_pat   = '^http://www.eluniversal.com.mx/[a-zA-Z0-9_\-]+/(.(?!.*\.pdf))*$'
     feeder_pages = [
                     'http://www.eluniversal.com.mx',
                     'http://www.eluniversal.com.mx/nacion',
